@@ -99,7 +99,6 @@ module WeixinAuthorize
       names.each do |name|
         missinglsit << name if options.nil? || !options.has_key?(name) || options[name].nil? || (!options[name].is_a?(Integer) && options[name].empty?)
       end
-      raise "#{module_name}: missing required param(缺少参数): #{missinglsit.join(', ')}"
     end
 
     def calculate_expire(expires_in)
