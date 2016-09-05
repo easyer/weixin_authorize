@@ -202,7 +202,9 @@ module WeixinAuthorize
         {
           card: {
             card_type: 'CASH',
-            base_info: bash_info,
+            cash:{
+              base_info: bash_info,
+            }
             least_cost: params[:least_cost],
             reduce_cost: params[:reduce_cost],
           }
