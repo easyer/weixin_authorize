@@ -183,7 +183,9 @@ module WeixinAuthorize
         {
           card: {
             card_type: 'GROUPON',
-            base_info: bash_info,
+            groupon: {
+              base_info: bash_info
+            },
             deal_detail: params[:deal_detail]
           }
         }
