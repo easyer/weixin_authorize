@@ -28,6 +28,12 @@ module WeixinAuthorize
     autoload(:RedisStore,  "weixin_authorize/js_ticket/redis_store")
   end
 
+  module ApiTicket
+    autoload(:Store,       "weixin_authorize/api_ticket/store")
+    autoload(:ObjectStore, "weixin_authorize/api_ticket/object_store")
+    autoload(:RedisStore,  "weixin_authorize/api_ticket/redis_store")
+  end
+
   OK_MSG  = "ok".freeze
   OK_CODE = 0.freeze
   GRANT_TYPE = "client_credential".freeze
@@ -44,7 +50,7 @@ module WeixinAuthorize
     def http_post_without_token(url, post_body={}, url_params={}, endpoint="plain")
       post_api_url = endpoint_url(endpoint, url)
       # to json if invoke "plain"
-      if endpoint == "plain" || endpoint == CUSTOM_ENDPOINT
+      if endpoint == "plain" || endpoint == "api" || endpoint == CUSTOM_ENDPOINT
         post_body = JSON.dump(post_body)
       end
       load_json(resource(post_api_url).post(post_body, params: url_params))
@@ -86,6 +92,14 @@ module WeixinAuthorize
 
     def open_endpoint(url)
       "https://open.weixin.qq.com#{url}"
+    end
+
+    def check_required_options(options, names, module_name='Weixin Authorize')
+      missinglsit = []
+      names.each do |name|
+        missinglsit << name if options.nil? || !options.has_key?(name) || options[name].nil? || (!options[name].is_a?(Integer) && options[name].empty?)
+      end
+      raise "#{module_name}: missing required param(缺少参数): #{missinglsit.join(', ')}"
     end
 
     def calculate_expire(expires_in)
