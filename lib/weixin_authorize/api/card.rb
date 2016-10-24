@@ -206,7 +206,7 @@ module WeixinAuthorize
             card_type: 'CASH',
             cash:{
               base_info: bash_info,
-              advanced_info: {accept_category: '芙蓉王'},
+              advanced_info: advanced_info,
               least_cost: params[:least_cost],
               reduce_cost: params[:reduce_cost]
             }
