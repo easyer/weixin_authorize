@@ -183,7 +183,9 @@ module WeixinAuthorize
         {
           card: {
             card_type: 'GROUPON',
-            base_info: bash_info,
+            groupon: {
+              base_info: bash_info
+            },
             deal_detail: params[:deal_detail]
           }
         }
@@ -193,7 +195,7 @@ module WeixinAuthorize
     INVOKE_CASH_REQUIRED_FIELDS = %i(least_cost reduce_cost)
     class Cash
       # 创建代金券json
-      def self.create(bash_info, params)
+      def self.create(bash_info, advanced_info, params)
         params = {
           least_cost: nil,
           reduce_cost: nil
@@ -202,9 +204,28 @@ module WeixinAuthorize
         {
           card: {
             card_type: 'CASH',
+            cash:{
+              base_info: bash_info,
+              advanced_info: advanced_info,
+              least_cost: params[:least_cost],
+              reduce_cost: params[:reduce_cost]
+            }
+          }
+        }
+      end
+
+      def self.update(bash_info, params)
+        params = {
+          least_cost: nil,
+          reduce_cost: nil
+        }.merge(params)
+        WeixinAuthorize.check_required_options(params, INVOKE_CASH_REQUIRED_FIELDS, MODULE_JSON_HELPER_NAME)
+        {
+          card: '',
+          cash:{
             base_info: bash_info,
             least_cost: params[:least_cost],
-            reduce_cost: params[:reduce_cost],
+            reduce_cost: params[:reduce_cost]
           }
         }
       end

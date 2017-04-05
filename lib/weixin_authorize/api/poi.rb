@@ -56,9 +56,10 @@ module WeixinAuthorize
       end
 
       # 拉取门店类目表
-      # http://api.weixin.qq.com/cgi-bin/api_getwxcategory?access_token=TOKEN
+      # http://api.weixin.qq.com/cgi-bin/poi/getwxcategory?access_token=TOKEN
       def poi_category()
-        http_get("/api_getwxcategory")
+        url = "#{poi_base_url}/getwxcategory"
+        http_get(url)
       end
 
 
