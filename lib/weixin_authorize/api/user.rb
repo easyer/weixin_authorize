@@ -58,6 +58,17 @@ module WeixinAuthorize
         http_post(update_url, post_body)
       end
 
+      #http请求方式: POST
+     #https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN
+     def shorturl(long_url)
+       update_url = "/shorturl"
+       post_body = {
+         action: 'long2short',
+         long_url: long_url
+       }
+       http_post(update_url, post_body)
+     end
+
       private
 
         def user_base_url
