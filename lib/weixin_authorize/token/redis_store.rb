@@ -7,7 +7,7 @@ module WeixinAuthorize
 
         Rails.logger.info("删除缓存")
 
-       weixin_redis.del(client.redis_key)
+      #  weixin_redis.del(client.redis_key)
        super
       end
 
