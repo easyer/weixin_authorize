@@ -51,9 +51,9 @@ module WeixinAuthorize
         token_infos = access_token_infos || http_get_access_token.result
         client.access_token = token_infos["access_token"]
         client.expired_at = WeixinAuthorize.calculate_expire(token_infos["expires_in"])
-
-        Rails.logger.info("client.access_token==@{client.access_token}")
-        Rails.logger.info("client.expired_at==@{client.expired_at}")
+        Rails.logger.info("token_infos==#{token_infos}")  
+        Rails.logger.info("client.access_token==#{client.access_token}")
+        Rails.logger.info("client.expired_at==#{client.expired_at}")
       end
 
       def http_get_access_token
