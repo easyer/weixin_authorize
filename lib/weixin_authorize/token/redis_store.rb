@@ -4,6 +4,9 @@ module WeixinAuthorize
     class RedisStore < Store
 
       def valid?
+
+        Rails.logger.info("删除缓存")
+
        weixin_redis.del(client.redis_key)
        super
       end
@@ -11,7 +14,6 @@ module WeixinAuthorize
       def token_expired?
         client.access_token = weixin_redis.hget(client.redis_key, "access_token")
         client.expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
-
         Rails.logger.info("client.access_token==#{client.access_token}")
         Rails.logger.info("client.expired_at==#{client.expired_at}")
         Rails.logger.info("client.redis_key==#{client.redis_key}")
