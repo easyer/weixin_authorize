@@ -33,7 +33,8 @@ module WeixinAuthorize
       @jsticket_expired_at = @expired_at = Time.now.to_i
       @redis_key = security_redis_key(options[:redis_key] || "weixin_#{app_id}")
       @jsticket_redis_key = security_redis_key("js_sdk_#{app_id}")
-
+      Rails.logger.info("initialize= = = = =@redis_key#{@redis_key} = = = ")
+      Rails.logger.info("initialize= = = = =@options#{@options} = = = ")
       @apiticket_expired_at = @expired_at = Time.now.to_i
 
       @custom_access_token = options[:custom_access_token]
@@ -42,11 +43,20 @@ module WeixinAuthorize
 
     # return token
     def get_access_token
-      Rails.logger.info("= = = = =get_access_token：#{token_store.access_token} = = = ")
+      Rails.logger.info("lllll= = = = =token_store#{token_store} = = = ")
+      Rails.logger.info("lllll= = = = =token_store#{token_store.class==ObjectStore} = = = ")
+
+      Rails.logger.info("aaaa= = = = =custom_access_token#{custom_access_token} = = = ")
+      Rails.logger.info("aaaa= = = = =access_token：#{access_token} = = = ")
+      Rails.logger.info("aaaa= = = = =get_access_token：#{token_store.access_token} = = = ")
       return custom_access_token if !custom_access_token.nil?
-      Rails.logger.info("= = = = = = =get_access_token：：#{token_store.access_token} = = = ")
+      Rails.logger.info("bbbb= = = = =custom_access_token#{custom_access_token} = = = ")
+      Rails.logger.info("bbbb= = = = =access_token：#{access_token} = = = ")
+      Rails.logger.info("bbbb= = = = = = =get_access_token：：#{token_store.access_token} = = = ")
       synchronize{ token_store.access_token }
-      Rails.logger.info("= = = = = = =get_access_token：#{token_store.access_token} = = = ")
+      Rails.logger.info("cccc= = = = =custom_access_token#{custom_access_token} = = = ")
+      Rails.logger.info("cccc= = = = =access_token：#{access_token} = = = ")
+      Rails.logger.info("cccc= = = = = = =get_access_token：#{token_store.access_token} = = = ")
     end
 
     # 检查appid和app_secret是否有效。
@@ -56,6 +66,7 @@ module WeixinAuthorize
     end
 
     def token_store
+      Rails.logger.info("创建 token_store")
       Token::Store.init_with(self)
     end
 

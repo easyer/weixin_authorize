@@ -11,8 +11,10 @@ module WeixinAuthorize
 
       def self.init_with(client)
         if WeixinAuthorize.weixin_redis.nil?
+          Rails.logger.info("没有缓存")
           ObjectStore.new(client)
         else
+          Rails.logger.info("有缓存")
           RedisStore.new(client)
         end
       end
@@ -45,6 +47,7 @@ module WeixinAuthorize
       end
 
       def set_access_token(access_token_infos=nil)
+        Rails.logger.info("access_token_infos赋值")
         token_infos = access_token_infos || http_get_access_token.result
         client.access_token = token_infos["access_token"]
         client.expired_at = WeixinAuthorize.calculate_expire(token_infos["expires_in"])

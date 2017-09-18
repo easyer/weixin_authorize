@@ -14,6 +14,7 @@ module WeixinAuthorize
 
       def refresh_token
         super
+        Rails.logger.info("设置缓存access_token")
         weixin_redis.hmset(
           client.redis_key, "access_token",
           client.access_token, "expired_at",
@@ -24,6 +25,8 @@ module WeixinAuthorize
 
       def access_token
         super
+        Rails.logger.info("获取缓存access_token")
+
         client.access_token = weixin_redis.hget(client.redis_key, "access_token")
         client.expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
         client.access_token
