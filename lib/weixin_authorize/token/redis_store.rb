@@ -21,6 +21,8 @@ module WeixinAuthorize
           client.expired_at
         )
         weixin_redis.expireat(client.redis_key, client.expired_at.to_i)
+
+        Rails.logger.info("weixin_redis==@{weixin_redis}")
       end
 
       def access_token
@@ -29,6 +31,10 @@ module WeixinAuthorize
 
         client.access_token = weixin_redis.hget(client.redis_key, "access_token")
         client.expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
+
+        Rails.logger.info("client.access_token==@{client.access_token}")
+        Rails.logger.info("client.expired_at==@{client.expired_at}")
+
         client.access_token
       end
 
