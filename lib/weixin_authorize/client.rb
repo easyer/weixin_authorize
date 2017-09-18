@@ -44,8 +44,6 @@ module WeixinAuthorize
     # return token
     def get_access_token
       Rails.logger.info("lllll= = = = =token_store#{token_store} = = = ")
-      Rails.logger.info("lllll= = = = =token_store#{token_store.class==ObjectStore} = = = ")
-
       Rails.logger.info("aaaa= = = = =custom_access_token#{custom_access_token} = = = ")
       Rails.logger.info("aaaa= = = = =access_token：#{access_token} = = = ")
       Rails.logger.info("aaaa= = = = =get_access_token：#{token_store.access_token} = = = ")
