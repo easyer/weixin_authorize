@@ -11,32 +11,20 @@ module WeixinAuthorize
 
       def self.init_with(client)
         if WeixinAuthorize.weixin_redis.nil?
-          Rails.logger.info("没有缓存")
+          # Rails.logger.info("没有缓存")
           ObjectStore.new(client)
         else
-          Rails.logger.info("有缓存")
+          # Rails.logger.info("有缓存")
           RedisStore.new(client)
         end
       end
 
       def valid?
-        Rails.logger.info("删除缓存22")
-
         authenticate["valid"]
       end
 
       def authenticate
-        Rails.logger.info("删除缓存authenticate")
-
         auth_result = http_get_access_token
-        Rails.logger.info("auth_result：#{auth_result}")
-
-        client.access_token = weixin_redis.hget(client.redis_key, "access_token")
-        client.expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
-        Rails.logger.info("client.access_token==#{client.access_token}")
-        Rails.logger.info("client.expired_at==#{client.expired_at}")
-        Rails.logger.info("client.redis_key==#{client.redis_key}")
-
         auth = false
         if auth_result.is_ok?
           set_access_token(auth_result.result)
@@ -59,13 +47,9 @@ module WeixinAuthorize
       end
 
       def set_access_token(access_token_infos=nil)
-        Rails.logger.info("access_token_infos赋值")
         token_infos = access_token_infos || http_get_access_token.result
         client.access_token = token_infos["access_token"]
         client.expired_at = WeixinAuthorize.calculate_expire(token_infos["expires_in"])
-        Rails.logger.info("token_infos==#{token_infos}")
-        Rails.logger.info("client.access_token==#{client.access_token}")
-        Rails.logger.info("client.expired_at==#{client.expired_at}")
       end
 
       def http_get_access_token
