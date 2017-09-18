@@ -46,15 +46,12 @@ module WeixinAuthorize
       Rails.logger.info("lllll= = = = =token_store#{token_store} = = = ")
       Rails.logger.info("aaaa= = = = =custom_access_token#{custom_access_token} = = = ")
       Rails.logger.info("aaaa= = = = =access_token：#{access_token} = = = ")
-      Rails.logger.info("aaaa= = = = =get_access_token：#{token_store.access_token} = = = ")
       return custom_access_token if !custom_access_token.nil?
       Rails.logger.info("bbbb= = = = =custom_access_token#{custom_access_token} = = = ")
       Rails.logger.info("bbbb= = = = =access_token：#{access_token} = = = ")
-      Rails.logger.info("bbbb= = = = = = =get_access_token：：#{token_store.access_token} = = = ")
       synchronize{ token_store.access_token }
       Rails.logger.info("cccc= = = = =custom_access_token#{custom_access_token} = = = ")
       Rails.logger.info("cccc= = = = =access_token：#{access_token} = = = ")
-      Rails.logger.info("cccc= = = = = = =get_access_token：#{token_store.access_token} = = = ")
     end
 
     # 检查appid和app_secret是否有效。
