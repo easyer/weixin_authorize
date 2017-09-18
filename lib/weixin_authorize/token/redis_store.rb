@@ -12,15 +12,9 @@ module WeixinAuthorize
       end
 
       def token_expired?
-        client.access_token = weixin_redis.hget(client.redis_key, "access_token")
-        client.expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
-        Rails.logger.info("client.access_token==#{client.access_token}")
-        Rails.logger.info("client.expired_at==#{client.expired_at}")
-        Rails.logger.info("client.redis_key==#{client.redis_key}")
-        Rails.logger.info("weixin_redis.hvals==#{weixin_redis.hvals(client.redis_key)}")
-        Rails.logger.info("statu==#{weixin_redis.hvals(client.redis_key).empty?}")
-
-        weixin_redis.hvals(client.redis_key).empty?
+        expired_at   = weixin_redis.hget(client.redis_key, "expired_at")
+        current_time = Time.now.to_i
+        status = weixin_redis.hvals(client.redis_key).empty? || current_time >= expired_at
       end
 
       def refresh_token
@@ -31,7 +25,7 @@ module WeixinAuthorize
           client.access_token, "expired_at",
           client.expired_at
         )
-        weixin_redis.expireat(client.redis_key, client.expired_at.to_i)
+        weixin_redis.expireat(client.redis_key, client.expired_at.to_i-100)
         Rails.logger.info("client.access_token==#{client.access_token}")
         Rails.logger.info("client.expired_at==#{client.expired_at}")
         Rails.logger.info("weixin_redis==#{weixin_redis}")
