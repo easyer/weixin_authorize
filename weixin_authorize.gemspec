@@ -18,7 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rest-client", ">= 1.6.7"
+  # spec.add_dependency "rest-client", ">= 1.6.7"
+  spec.add_dependency 'rest-client', '~> 2.0', '>= 2.0.2'
   spec.add_dependency "redis", ">= 3.1.0"
 
   spec.add_dependency "carrierwave", ">= 0.10.0"
@@ -38,8 +39,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "redis-namespace"
   spec.add_development_dependency "codeclimate-test-reporter"
-  spec.add_development_dependency "simplecov", "~> 0.10.0"
-  spec.add_development_dependency 'coveralls', '~> 0.8.2'
+  # spec.add_development_dependency "simplecov", "~> 0.10.0"
+  spec.add_development_dependency 'simplecov', '~> 0.14.1'
+  # spec.add_development_dependency 'coveralls', '~> 0.8.2'
+  spec.add_development_dependency 'coveralls', '~> 0.8.21'
   spec.add_development_dependency 'pry-rails'
   if RUBY_PLATFORM != 'java'
     spec.add_development_dependency 'pry-byebug'
