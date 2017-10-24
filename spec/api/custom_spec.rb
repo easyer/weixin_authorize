@@ -1,6 +1,6 @@
 describe WeixinAuthorize::Api::Custom do
   let(:text_message) do
-    "text Custom message"
+    'text Custom message'
   end
 
   let(:image_path) do
@@ -11,7 +11,7 @@ describe WeixinAuthorize::Api::Custom do
     File.new(image_path)
   end
 
-  it "#send_text_custom" do
+  it '#send_text_custom' do
     response = $client.send_text_custom(ENV["OPENID"], text_message)
     expect(response.code).to eq(WeixinAuthorize::OK_CODE)
   end

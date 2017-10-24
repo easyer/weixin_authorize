@@ -42,11 +42,8 @@ module WeixinAuthorize
 
     # return token
     def get_access_token
-      Rails.logger.info("= = = = =get_access_token：#{token_store.access_token} = = = ")
       return custom_access_token if !custom_access_token.nil?
-      Rails.logger.info("= = = = = = =get_access_token：：#{token_store.access_token} = = = ")
       synchronize{ token_store.access_token }
-      Rails.logger.info("= = = = = = =get_access_token：#{token_store.access_token} = = = ")
     end
 
     # 检查appid和app_secret是否有效。
