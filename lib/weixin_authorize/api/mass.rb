@@ -3,6 +3,12 @@ module WeixinAuthorize
   module Api
     module Mass
 
+      # 获取自动回复规则
+      # https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN
+      def mass_autoreply_rules
+       http_get('/get_current_autoreply_info')
+      end
+
       MSG_TYPE = ["mpnews", "image", "text", "voice", "mpvideo"].freeze
 
       # media_info= {"media_id" media_id}

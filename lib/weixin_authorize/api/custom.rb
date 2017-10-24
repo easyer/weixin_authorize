@@ -160,6 +160,22 @@ module WeixinAuthorize
         http_post(KF_SESSION_URL, post_body, {}, CUSTOM_ENDPOINT)
       end
 
+      # 发送卡券
+      # {
+      #     "touser":"OPENID",
+      #     "msgtype":"wxcard",
+      #     "wxcard":
+      #     {
+      #        "card_id":"123dsdajkasd231jhksad",
+      #        "card_ext": {code: code, openid: openid, timestamp: 1402057159, signature: '017bb17407c8e0058a66d72dcc61632b70f511ad'}
+      #     }
+      # }
+      def send_card_custom(to_user='', card_id='')
+       wxcard = default_options(to_user, 'wxcard').merge(
+           {wxcard:{card_id: card_id, card_ext: card_ext(card_id)}})
+       http_post(custom_base_url, wxcard)
+      end
+
       private
 
         # https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
